@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yung Dunks</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial;background:#f5f5f5;color:#111}
+
+header{
+    background:#111;color:white;padding:18px 7%;
+    display:flex;justify-content:space-between;align-items:center;
+    position:sticky;top:0;z-index:10
+}
+.logo{font-size:27px;font-weight:bold}
+.logo span{color:#ff4d00}
+
+nav a{
+    color:white;text-decoration:none;margin:0 12px
+}
+nav a:hover{color:#ff4d00}
+
+.cart{
+    background:#ff4d00;color:white;border:0;
+    padding:10px 15px;border-radius:20px;cursor:pointer
+}
+
+/* HOME */
+.hero{
+    min-height:75vh;background:#111;color:white;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:50px 8%
+}
+.hero h1{font-size:60px}
+.hero span{color:#ff4d00}
+.hero p{margin:20px 0;line-height:1.6}
+.hero img{width:45%;border-radius:20px}
+
+.btn{
+    display:inline-block;background:#ff4d00;color:white;
+    padding:13px 25px;border-radius:25px;text-decoration:none
+}
+
+/* SHOP */
+section{padding:60px 7%}
+.title{text-align:center;margin-bottom:30px}
+.title h2{font-size:38px;margin-bottom:8px}
+
+#search{
+    display:block;width:90%;max-width:500px;
+    margin:0 auto 30px;padding:13px 20px;
+    border:1px solid #ccc;border-radius:25px
+}
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px
+}
+
+.card{
+    background:white;border-radius:12px;
+    overflow:hidden;box-shadow:0 3px 12px #ddd;
+    transition:.3s
+}
+.card:hover{transform:translateY(-5px)}
+.card img{width:100%;height:210px;object-fit:cover}
+.info{padding:18px}
+.info h3{margin-bottom:8px}
+.price{font-size:19px;font-weight:bold;margin:12px 0}
+
+.add{
+    width:100%;padding:11px;background:#111;
+    color:white;border:0;border-radius:7px;cursor:pointer
+}
+.add:hover{background:#ff4d00}
+
+/* ABOUT */
+.about{
+    background:#111;color:white;text-align:center
+}
+.about p{
+    max-width:700px;margin:15px auto;
+    line-height:1.7;color:#ccc
+}
+
+/* CONTACT */
+.form{max-width:600px;margin:auto}
+.form input,.form textarea{
+    width:100%;padding:13px;margin:8px 0;
+    border:1px solid #ccc;border-radius:7px
+}
+.form textarea{height:120px}
+.form button{
+    width:100%;padding:13px;background:#ff4d00;
+    color:white;border:0;border-radius:7px;cursor:pointer
+}
+
+footer{
+    background:#111;color:white;text-align:center;padding:25px
+}
+footer span{color:#ff4d00}
+
+/* CART */
+#cartBox{
+    position:fixed;right:-350px;top:0;
+    width:330px;height:100%;background:white;
+    padding:25px;box-shadow:-3px 0 15px #aaa;
+    transition:.4s;z-index:20
+}
+#cartBox.open{right:0}
+#cartBox button{cursor:pointer}
+.close{
+    float:right;border:0;background:#eee;
+    padding:5px 10px
+}
+.cartItem{
+    border-bottom:1px solid #ddd;
+    padding:12px 0
+}
+.total{margin-top:20px;font-size:20px;font-weight:bold}
+
+/* MOBILE */
+@media(max-width:900px){
+    .products{grid-template-columns:repeat(2,1fr)}
+    .hero h1{font-size:45px}
+}
+@media(max-width:600px){
+    nav{display:none}
+    .hero{flex-direction:column;text-align:center}
+    .hero img{width:90%;margin-top:30px}
+    .products{grid-template-columns:1fr}
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<header>
+    <div class="logo">Yung <span>Dunks</span></div>
+
+```
+<nav>
+    <a href="#home">Home</a>
+    <a href="#shop">Shop</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<button class="cart" onclick="openCart()">
+    🛒 Cart (<span id="count">0</span>)
+</button>
+```
+
+</header>
+
+<!-- HOME -->
+
+<section class="hero" id="home">
+
+```
+<div>
+    <h1>STEP INTO<br><span>YOUR STYLE.</span></h1>
+
+    <p>
+        Discover stylish and comfortable sneakers
+        made for everyday streetwear.
+    </p>
+
+    <a href="#shop" class="btn">SHOP NOW</a>
+</div>
+
+<img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80"
+     alt="Sneaker">
+```
+
+</section>
+
+<!-- SHOP -->
+
+<section id="shop">
+
+```
+<div class="title">
+    <h2>Our Sneakers</h2>
+    <p>Choose your favorite pair.</p>
+</div>
+
+<input id="search"
+       type="text"
+       placeholder="Search sneakers..."
+       onkeyup="search()">
+
+<div class="products">
+
+    <div class="card" data-name="Yung Air Red">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80">
+        <div class="info">
+            <h3>Yung Air Red</h3>
+            <p>Street Collection</p>
+            <div class="price">₹2,499</div>
+            <button class="add"
+            onclick="add('Yung Air Red',2499)">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+
+    <div class="card" data-name="Yung Classic White">
+        <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=700&q=80">
+        <div class="info">
+            <h3>Yung Classic White</h3>
+            <p>Classic Collection</p>
+            <div class="price">₹2,799</div>
+            <button class="add"
+            onclick="add('Yung Classic White',2799)">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+
+    <div class="card" data-name="Yung Street Black">
+        <img src="https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=700&q=80">
+        <div class="info">
+            <h3>Yung Street Black</h3>
+            <p>Street Collection</p>
+            <div class="price">₹3,299</div>
+            <button class="add"
+            onclick="add('Yung Street Black',3299)">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+
+    <div class="card" data-name="Yung Runner">
+        <img src="https://images.unsplash.com/photo-1554130842-9f9b12a8f1f7?auto=format&fit=crop&w=700&q=80">
+        <div class="info">
+            <h3>Yung Runner</h3>
+            <p>Running Collection</p>
+            <div class="price">₹2,999</div>
+            <button class="add"
+            onclick="add('Yung Runner',2999)">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+
+    <div class="card" data-name="Yung Retro">
+        <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=80">
+        <div class="info">
+            <h3>Yung Retro</h3>
+            <p>Retro Collection</p>
+            <div class="price">₹2,199</div>
+            <button class="add"
+            onclick="add('Yung Retro',2199)">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+
+    <div class="card" data-name="Yung Shadow">
+        <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=700&q=80">
+        <div class="info">
+            <h3>Yung Shadow</h3>
+            <p>Premium Collection</p>
+            <div class="price">₹3,499</div>
+            <button class="add"
+            onclick="add('Yung Shadow',3499)">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+
+    <div class="card" data-name="Yung Cloud">
+        <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=700&q=80">
+        <div class="info">
+            <h3>Yung Cloud</h3>
+            <p>Comfort Collection</p>
+            <div class="price">₹2,699</div>
+            <button class="add"
+            onclick="add('Yung Cloud',2699)">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+
+    <div class="card" data-name="Yung Dunk Pro">
+        <img src="https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=700&q=80">
+        <div class="info">
+            <h3>Yung Dunk Pro</h3>
+            <p>Premium Collection</p>
+            <div class="price">₹3,999</div>
+            <button class="add"
+            onclick="add('Yung Dunk Pro',3999)">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- ABOUT -->
+
+<section class="about" id="about">
+
+```
+<div class="title">
+    <h2>About Yung Dunks</h2>
+</div>
+
+<p>
+    Yung Dunks is a fictional sneaker brand focused on
+    modern streetwear, comfort and affordable style.
+</p>
+
+<p>
+    Our goal is to create sneakers that let everyone
+    express their own personality.
+</p>
+```
+
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+```
+<div class="title">
+    <h2>Contact Us</h2>
+    <p>Have a question? Send us a message.</p>
+</div>
+
+<div class="form">
+
+    <input type="text" id="name" placeholder="Your Name">
+
+    <input type="email" id="email" placeholder="Your Email">
+
+    <textarea id="message"
+              placeholder="Your Message"></textarea>
+
+    <button onclick="sendMessage()">
+        Send Message
+    </button>
+
+</div>
+```
+
+</section>
+
+<!-- CART -->
+
+<div id="cartBox">
+
+```
+<button class="close" onclick="closeCart()">X</button>
+
+<h2>Your Cart</h2>
+
+<div id="cartItems">
+    <p>Your cart is empty.</p>
+</div>
+
+<div class="total">
+    Total: ₹<span id="total">0</span>
+</div>
+```
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+    <p>© 2026 <span>Yung Dunks</span> | Step Into Your Style</p>
+</footer>
+
+<script>
+
+let cart = [];
+let total = 0;
+
+
+/* ADD TO CART */
+function add(name,price){
+
+    cart.push({name:name,price:price});
+
+    total += price;
+
+    document.getElementById("count").innerText = cart.length;
+
+    showCart();
+
+    alert(name + " added to cart!");
+
+}
+
+
+/* SHOW CART */
+function showCart(){
+
+    let box = document.getElementById("cartItems");
+
+    box.innerHTML = "";
+
+    if(cart.length == 0){
+        box.innerHTML = "<p>Your cart is empty.</p>";
+        return;
+    }
+
+    cart.forEach(function(item){
+
+        box.innerHTML +=
+        "<div class='cartItem'>" +
+        item.name +
+        "<br>₹" + item.price +
+        "</div>";
+
+    });
+
+    document.getElementById("total").innerText =
+        total.toLocaleString("en-IN");
+
+}
+
+
+/* OPEN CART */
+function openCart(){
+
+    document.getElementById("cartBox")
+    .classList.add("open");
+
+    showCart();
+
+}
+
+
+/* CLOSE CART */
+function closeCart(){
+
+    document.getElementById("cartBox")
+    .classList.remove("open");
+
+}
+
+
+/* SEARCH */
+function search(){
+
+    let text =
+        document.getElementById("search")
+        .value.toLowerCase();
+
+    let cards =
+        document.querySelectorAll(".card");
+
+    cards.forEach(function(card){
+
+        let name =
+            card.dataset.name.toLowerCase();
+
+        if(name.includes(text)){
+            card.style.display = "block";
+        }
+        else{
+            card.style.display = "none";
+        }
+
+    });
+
+}
+
+
+/* CONTACT */
+function sendMessage(){
+
+    let name =
+        document.getElementById("name").value;
+
+    if(name == ""){
+        alert("Please enter your name.");
+    }
+    else{
+        alert("Thank you " + name + "! Message sent.");
+    }
+
+}
+
+</script>
+
+</body>
+</html>
